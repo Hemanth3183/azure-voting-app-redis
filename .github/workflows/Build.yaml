@@ -22,7 +22,8 @@ jobs:
           image: azure-vote-front
           folder: azure-vote
           branch: master
-          tag: ${{ github.sha }}
+          # tag: ${{ github.sha }}
+          tag: v1
       # - name: Azure login
       #   uses: azure/login@v1.4.3
       #   with:
