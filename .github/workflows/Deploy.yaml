@@ -30,6 +30,6 @@ jobs:
           namespace: default
           manifests: |
             azure-vote-all-in-one-redis.yaml
-          # images: '${{ secrets.REGISTRY}}/${{ secrets.repository }}/azure-vote-front:${{ github.sha }}'
-          images: '${{ secrets.REGISTRY}}/${{ secrets.repository }}/azure-vote-front:v1'
+          images: '${{ secrets.REGISTRY}}/${{ secrets.repository }}/azure-vote-front:${{ github.sha }}'
+          # images: '${{ secrets.REGISTRY}}/${{ secrets.repository }}/azure-vote-front:v1'
           pull-images: false
