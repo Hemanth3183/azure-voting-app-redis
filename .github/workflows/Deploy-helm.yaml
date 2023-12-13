@@ -8,6 +8,10 @@ on:
   workflow_dispatch:
 jobs:
   DeploytoAKS:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout code
@@ -27,6 +31,26 @@ jobs:
           login-server: ${{ secrets.ACR_NAME }}.azurecr.io
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+      - name: Bake deployment
+        uses: azure/k8s-bake@v2.4
+        with:
+          renderEngine: 'helm'
+          helmChart: './azure-vote/'
+          overrideFiles: |
+            ./azure-vote/values.yaml
+          helm-version: 'latest'
+        id: bake
+      - name: Deploy to AKS
+        uses: azure/k8s-deploy@v4
+        with:
+          action: 'deploy'
+          strategy: 'basic'
+          namespace: 'azure-vote'
+          manifests: ${{ steps.bake.outputs.manifests }}            
+          images: |
+            ${{ secrets.ACR_NAME }}.azurecr.io/azure-vote:${{ github.sha }}
+          imagepullsecrets: |
+            ${{ secrets.ACR_NAME }}-acr-auth
       
           
 
