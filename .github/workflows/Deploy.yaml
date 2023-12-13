@@ -13,9 +13,9 @@ jobs:
       - name: Login to ACR
         uses: azure/docker-login@v1
         with:
-          login-server: hemiacr.azurecr.io
-          username: hemiacr
-          password: 8UsAN+ZtJDKDoM8f/Gdhfhutg3BmSVaEnBwVT8Baja+ACRB4XB2d
+          login-server: ${{ secrets.ACR_NAME }}.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
       - name: Set AKS context
         uses: azure/aks-set-context@v3
         with:
