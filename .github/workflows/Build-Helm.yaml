@@ -8,20 +8,27 @@ jobs:
   BuildHelmChart:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Set up Helm
       uses: azure/setup-helm@v1
       with:
-        version: 'v3.2.4'
-    - name: Build Helm chart
-      run: |
-        helm package ./helm-chart
-    - name: Push Helm chart to ACR
-      uses: azure/acr-helm@v1
+        version: 'v3.10.3'
+    - name: Log in with Azure credentials
+      uses: azure/login@v1
       with:
-        azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-        azure_resource_group: ${{ secrets.AZURE_RESOURCE_GROUP }}
-        azure_container_registry: ${{ secrets.AZURE_CONTAINER_REGISTRY }}
-        helm_chart_package: ./azure-vote-0.1.0.tgz
-        helm_chart_version: 0.1.0
-        helm_chart_name: azure-vote
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Build image and push to ACR
+      run: |
+        az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
+    # - name: Build Helm chart
+    #   run: |s
+    #     helm package ./helm-chart
+    # - name: Push Helm chart to ACR
+    #   uses: azure/acr-helm@v1
+    #   with:
+    #     azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    #     azure_resource_group: ${{ secrets.AZURE_RESOURCE_GROUP }}
+    #     azure_container_registry: ${{ secrets.AZURE_CONTAINER_REGISTRY }}
+    #     helm_chart_package: ./azure-vote-0.1.0.tgz
+    #     helm_chart_version: 0.1.0
+    #     helm_chart_name: azure-vote
