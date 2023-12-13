@@ -47,7 +47,7 @@ jobs:
           strategy: 'basic'
           namespace: 'azure-vote'
           manifests: |
-            ${{ steps.bake.outputs.manifests }}            
+            ${{ steps.bake.outputs.manifestsBundle }}     
           images: |
             ${{ secrets.ACR_NAME }}.azurecr.io/azure-vote:${{ github.sha }}
           imagepullsecrets: |
