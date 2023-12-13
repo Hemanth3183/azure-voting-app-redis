@@ -17,15 +17,9 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURESECRET }}
-    # - name: Set up Azure CLI
-    #   uses: azure/cli@v1
-    #   with:
-    #     azcliversion: 2.30.0
-    #     inlineScript: |
-    #       az account show
     - name: Build image and push to ACR
       run: |
-        az acr build --image ${{ secrets.REGISTRY }}/${{ secrets.CONTAINER }}:${{ github.sha }} --registry ${{ secrets.REGISTRY }} -g ${{ secrets.RESOURCE_GROUP }} -f ./azure-vote/azure-vote/Dockerfile
+        az acr build --image ${{ secrets.REGISTRY }}/${{ secrets.CONTAINER }}:${{ github.sha }} --registry ${{ secrets.REGISTRY }} -g ${{ secrets.RESOURCE_GROUP }} -f ./azure-vote/azure-vote/Dockerfile ./azure-vote
     # - name: Build Helm chart
     #   run: |s
     #     helm package ./helm-chart
