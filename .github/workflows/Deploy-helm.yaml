@@ -17,11 +17,10 @@ jobs:
         with:
           creds: ${{ secrets.AZURESECRET }}
       - name: Set AKS context
-        uses: azure/aks-set-context@v1
+        uses: azure/aks-set-context@v3
         with:
-          creds: ${{ secrets.AZURESECRET }}
-          cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
-          resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+          resource-group: '${{ secrets.RESOURCE_GROUP }}'
+          cluster-name: '${{ secrets.CLUSTER_NAME }}'
       - name: Login to ACR
         uses: azure/docker-login@v1
         with:
