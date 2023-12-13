@@ -25,7 +25,7 @@ front:
       requests:
         cpu: 250m
   nodeSelector:
-    beta.kubernetes.io/os: linux
+    kubernetes.io/os: linux
   ports:
     - port: 80
       targetPort: 0
