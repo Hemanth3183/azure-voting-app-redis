@@ -16,9 +16,9 @@ front:
   azureVoteFront:
     env:
       redis: azure-vote-back
-      image:
-        repository: hemiacr.azurecr.io/azure-vote
-        tag: v1
+    image:
+      repository: hemiacr.azurecr.io/azure-vote
+      tag: v1
     resources:
       limits:
         cpu: 500m
