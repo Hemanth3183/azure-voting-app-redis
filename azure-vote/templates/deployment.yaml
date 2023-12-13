@@ -52,7 +52,7 @@ spec:
       containers:
       - env:
         - name: REDIS
-          value: {{ quote .Values.front.azureVoteFront.env.redis }}
+          value: {{ quote .Values.front.azureVoteFront.env.redis | default (include "azure-vote.fullname" . | quote) }}
         # - name: KUBERNETES_CLUSTER_DOMAIN
         #   value: {{ quote .Values.kubernetesClusterDomain }}
         image: {{ .Values.front.azureVoteFront.image.repository }}:{{ .Values.front.azureVoteFront.image.tag

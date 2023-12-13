@@ -44,30 +44,18 @@ jobs:
             ./azure-vote/values.yaml
           helm-version: 'latest'
         id: bake
-      # - name: Deploy to AKS
-      #   uses: azure/k8s-deploy@v4
-      #   with:
-      #     action: 'deploy'
-      #     strategy: 'basic'
-      #     namespace: 'azure-vote'
-      #     manifests: |
-      #       ${{ steps.bake.outputs.manifestsBundle }}     
-      #     images: |
-      #       ${{ secrets.ACR_NAME }}.azurecr.io/azure-vote:${{ github.sha }}
-      #     imagepullsecrets: |
-      #       ${{ secrets.ACR_NAME }}-acr-auth
-      - name: Helm deploy
-        uses: deliverybot/helm@v1
+      - name: Deploy to AKS
+        uses: azure/k8s-deploy@v4
         with:
-          chart: './azure-vote/'
+          action: 'deploy'
+          strategy: 'basic'
           namespace: 'azure-vote'
-          release: 'azure-vote'
-          values: |
-            ./azure-vote/values.yaml
-          version: 'latest'
-        env:
-          resource-group: '${{ secrets.RESOURCE_GROUP }}'
-          cluster-name: '${{ secrets.CLUSTER_NAME }}'
+          manifests: |
+            ${{ steps.bake.outputs.manifestsBundle }}     
+          images: |
+            ${{ secrets.ACR_NAME }}.azurecr.io/azure-vote:${{ github.sha }}
+          imagepullsecrets: |
+            ${{ secrets.ACR_NAME }}-acr-auth
 
           
       
