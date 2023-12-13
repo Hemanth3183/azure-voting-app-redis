@@ -57,7 +57,7 @@ jobs:
       #     imagepullsecrets: |
       #       ${{ secrets.ACR_NAME }}-acr-auth   
       - name: Deliverybot Helm deploy
-        uses: deliverybot/helm@v1
+        uses: 'deliverybot/helm@v1'
         with:
           release: azure-vote
           chart: ./azure-vote
