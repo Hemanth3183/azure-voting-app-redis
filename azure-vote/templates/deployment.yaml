@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "azure-vote.fullname" . }}-back
+  labels:
+  {{- include "azure-vote.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.back.replicas }}
+  selector:
+    matchLabels:
+      app: azure-vote-back
+    {{- include "azure-vote.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: azure-vote-back
+      {{- include "azure-vote.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: ALLOW_EMPTY_PASSWORD
+          value: {{ quote .Values.back.azureVoteBack.env.allowEmptyPassword }}
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.back.azureVoteBack.image.repository }}:{{ .Values.back.azureVoteBack.image.tag
+          | default .Chart.AppVersion }}
+        name: azure-vote-back
+        ports:
+        - containerPort: 6379
+          name: redis
+        resources: {}
+      nodeSelector: {{- toYaml .Values.back.nodeSelector | nindent 8 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "azure-vote.fullname" . }}-front
+  labels:
+  {{- include "azure-vote.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.front.replicas }}
+  selector:
+    matchLabels:
+      app: azure-vote-front
+    {{- include "azure-vote.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: azure-vote-front
+      {{- include "azure-vote.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: REDIS
+          value: {{ quote .Values.front.azureVoteFront.env.redis }}
+        # - name: KUBERNETES_CLUSTER_DOMAIN
+        #   value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.front.azureVoteFront.image.repository }}:{{ .Values.front.azureVoteFront.image.tag
+          | default .Chart.AppVersion }}
+        name: azure-vote-front
+        ports:
+        - containerPort: 80
+        resources: {{- toYaml .Values.front.azureVoteFront.resources | nindent 10 }}
+      nodeSelector: {{- toYaml .Values.front.nodeSelector | nindent 8 }}
