@@ -35,7 +35,7 @@ jobs:
         uses: azure/k8s-bake@v2.4
         with:
           renderEngine: 'helm'
-          helmChart: '.'
+          helmChart: './azure-vote/'
           overrideFiles: |
             ./azure-vote/values.yaml
           helm-version: 'latest'

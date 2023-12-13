@@ -19,7 +19,7 @@ jobs:
         creds: ${{ secrets.AZURESECRET }}
     - name: Build Helm chart
       run: |
-        helm package ./azure-vote
+        helm package ./azure-vote -d ./azure-vote
     - name: Build image and push to ACR
       run: |
         az acr build --image ${{ secrets.REGISTRY }}/${{ secrets.CONTAINER }}:${{ github.sha }} --registry ${{ secrets.REGISTRY }} -g ${{ secrets.RESOURCE_GROUP }} -f ./azure-vote/Dockerfile ./azure-vote
