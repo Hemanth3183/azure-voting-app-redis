@@ -1,10 +1,10 @@
 name: Deploy Helm chart to AKS
 on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - .github/workflows/*
+  # push:
+  #   branches:
+  #     - master
+  #   paths-ignore:
+  #     - .github/workflows/*
   workflow_dispatch:
 jobs:
   DeploytoAKS:
