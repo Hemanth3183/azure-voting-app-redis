@@ -13,26 +13,27 @@ jobs:
       uses: azure/setup-helm@v1
       with:
         version: 'v3.10.3'
+    
+    - name: Log in with Azure credentials
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURESECRET }}
     - name: Set up Azure CLI
       uses: azure/cli@v1
       with:
         azcliversion: 2.30.0
         inlineScript: |
           az account show
-    - name: Log in with Azure credentials
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Build image and push to ACR
       run: |
-        az acr build --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ github.sha }} --registry ${{ env.AZURE_CONTAINER_REGISTRY }} -g ${{ env.RESOURCE_GROUP }} .
+        az acr build --image ${{ secrets.REGISTRY }}.azurecr.io/${{ secrets.CONTAINER }}:${{ github.sha }} --registry ${{ secrets.REGISTRY }} -g ${{ secrets.RESOURCE_GROUP }} .
     # - name: Build Helm chart
     #   run: |s
     #     helm package ./helm-chart
     # - name: Push Helm chart to ACR
     #   uses: azure/acr-helm@v1
     #   with:
-    #     azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    #     azure_credentials: ${{ secrets.AZURESECRET }}
     #     azure_resource_group: ${{ secrets.AZURE_RESOURCE_GROUP }}
     #     azure_container_registry: ${{ secrets.AZURE_CONTAINER_REGISTRY }}
     #     helm_chart_package: ./azure-vote-0.1.0.tgz
