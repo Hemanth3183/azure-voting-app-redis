@@ -25,7 +25,7 @@ jobs:
           az account show
     - name: Build image and push to ACR
       run: |
-        az acr build --image ${{ secrets.REGISTRY }}/${{ secrets.CONTAINER }}:${{ github.sha }} --registry ${{ secrets.REGISTRY }} -g ${{ secrets.RESOURCE_GROUP }} ./azure-vote/Dockerfile
+        az acr build --image ${{ secrets.REGISTRY }}/${{ secrets.CONTAINER }}:${{ github.sha }} --registry ${{ secrets.REGISTRY }} -g ${{ secrets.RESOURCE_GROUP }} -f ./azure-vote 
     # - name: Build Helm chart
     #   run: |s
     #     helm package ./helm-chart
