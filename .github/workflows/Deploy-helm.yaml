@@ -55,9 +55,7 @@ jobs:
           images: |
             ${{ secrets.ACR_NAME }}.azurecr.io/azure-vote:${{ github.sha }}
           imagepullsecrets: |
-            ${{ secrets.ACR_NAME }}-acr-auth
-        env:
-          REDIS: release-name-azure-vote-back          
+            ${{ secrets.ACR_NAME }}-acr-auth          
       
           
 
