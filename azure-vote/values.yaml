@@ -15,7 +15,7 @@ back:
 front:
   azureVoteFront:
     env:
-      redis:
+      redis: azure-vote-back
       image:
       repository: hemiacr.azurecr.io/azuredocs/azure-vote-front
       tag: v1
