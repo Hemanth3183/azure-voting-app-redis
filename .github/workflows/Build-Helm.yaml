@@ -13,6 +13,12 @@ jobs:
       uses: azure/setup-helm@v1
       with:
         version: 'v3.10.3'
+    - name: Set up Azure CLI
+      uses: azure/cli@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          az account show
     - name: Log in with Azure credentials
       uses: azure/login@v1
       with:
