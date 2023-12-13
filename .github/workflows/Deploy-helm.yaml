@@ -16,11 +16,12 @@ jobs:
         uses: azure/login@v1.4.3
         with:
           creds: ${{ secrets.AZURESECRET }}
-      - name: Setup kubectl context
-        uses: azure/k8s-set-context@v3
+      - name: Set AKS context
+        uses: azure/aks-set-context@v1
         with:
-          resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
+          creds: ${{ secrets.AZURESECRET }}
           cluster-name: ${{ secrets.AKS_CLUSTER_NAME }}
+          resource-group: ${{ secrets.AKS_RESOURCE_GROUP }}
       - name: Login to ACR
         uses: azure/docker-login@v1
         with:
