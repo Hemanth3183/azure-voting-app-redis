@@ -17,12 +17,12 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURESECRET }}
+    - name: Build Helm chart
+      run: |
+        helm package ./azure-vote
     - name: Build image and push to ACR
       run: |
         az acr build --image ${{ secrets.REGISTRY }}/${{ secrets.CONTAINER }}:${{ github.sha }} --registry ${{ secrets.REGISTRY }} -g ${{ secrets.RESOURCE_GROUP }} -f ./azure-vote/Dockerfile ./azure-vote
-    # - name: Build Helm chart
-    #   run: |s
-    #     helm package ./helm-chart
     # - name: Push Helm chart to ACR
     #   uses: azure/acr-helm@v1
     #   with:

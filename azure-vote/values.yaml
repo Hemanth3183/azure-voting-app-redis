@@ -14,8 +14,8 @@ back:
   type: ClusterIP
 front:
   azureVoteFront:
-    env:
-      redis: azure-vote-back
+    # env:
+    #   redis: {{ include "azure-vote.fullname" . }}-back
     image:
       repository: hemiacr.azurecr.io/azuredocs/azure-vote-front
       tag: v1
