@@ -6,7 +6,7 @@ back:
       repository: mcr.microsoft.com/oss/bitnami/redis
       tag: 6.0.8
   nodeSelector:
-    beta.kubernetes.io/os: linux
+    kubernetes.io/os: linux
   ports:
     - port: 6379
       targetPort: 0
